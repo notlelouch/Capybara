@@ -25,7 +25,7 @@ Capybara is a decentralized autonomous organization (DAO) designed to enable mem
 ### Clone the repository to your local machine
 
    ```bash
-    git clone https://github.com/yourusername/capybara-dao.git
+    git clone https://github.com/<your_username>/Capybara.git
     cd capybara-dao
    ```
 ### Set Up Environment Variables
