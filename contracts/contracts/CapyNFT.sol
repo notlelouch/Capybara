@@ -3,9 +3,9 @@ pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract CryptoDevsNFT is ERC721Enumerable {
+contract CapyNFT is ERC721Enumerable {
 
-    constructor() ERC721("CryptoDevs", "CD") {}
+    constructor() ERC721("Capy", "CP") {}
 
     function mint() public {
         _safeMint(msg.sender, totalSupply());

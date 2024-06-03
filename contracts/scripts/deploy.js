@@ -6,9 +6,9 @@ async function sleep(ms) {
 
 async function main() {
   // Deploy the NFT Contract
-  const nftContract = await hre.ethers.deployContract("CryptoDevsNFT");
+  const nftContract = await hre.ethers.deployContract("CapyNFT");
   await nftContract.waitForDeployment();
-  console.log("CryptoDevsNFT deployed to:", nftContract.target);
+  console.log("CapyNFT deployed to:", nftContract.target);
 
   // Deploy the Fake Marketplace Contract
   const fakeNftMarketplaceContract = await hre.ethers.deployContract(
@@ -23,13 +23,13 @@ async function main() {
   const deployerAddress = "0x31aaAC0090aE1590e0688eAa7192763556168D91"
   // Deploy the DAO Contract
   const amount = hre.ethers.parseEther(".02"); // You can change this value from 1 ETH to something else
-  const daoContract = await hre.ethers.deployContract("CryptoDevsDAO", [
+  const daoContract = await hre.ethers.deployContract("CapyDAO", [
     fakeNftMarketplaceContract.target,
     nftContract.target,
     deployerAddress,
   ], {value: amount,});
   await daoContract.waitForDeployment();
-  console.log("CryptoDevsDAO deployed to:", daoContract.target);
+  console.log("CapyDAO deployed to:", daoContract.target);
 
   // Sleep for 30 seconds to let Etherscan catch up with the deployments
   await sleep(30 * 1000);

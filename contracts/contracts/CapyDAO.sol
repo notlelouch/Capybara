@@ -13,8 +13,8 @@ interface IFakeNFTMarketplace {
     function purchase(uint256 _tokenId) external payable;
 }
 
-// Minimal interface for CryptoDevsNFT containing only two functions that we are interested in
-interface ICryptoDevsNFT {
+// Minimal interface for CapyNFT containing only two functions that we are interested in
+interface ICapyNFT {
     //balanceOf returns the number of NFTs owned by the given address
     function balanceOf(address owner) external view returns (uint256);
 
@@ -25,7 +25,7 @@ interface ICryptoDevsNFT {
         returns (uint256);
 }
 
-contract CryptoDevsDAO is Ownable {
+contract CapyDAO is Ownable {
     
     struct Proposal {
         uint256 nftTokenID;
@@ -34,7 +34,7 @@ contract CryptoDevsDAO is Ownable {
         uint256 nayVotes;
         // Whether or not this proposal has been executed yet. Cannot be executed before the deadline has been exceeded.
         bool executed;
-        // A mapping of CryptoDevsNFT tokenIDs to booleans indicating whether that NFT has already been used to cast a vote or not.
+        // A mapping of CapyNFT tokenIDs to booleans indicating whether that NFT has already been used to cast a vote or not.
         mapping (uint256 => bool) voters;
     }
 
@@ -42,15 +42,15 @@ contract CryptoDevsDAO is Ownable {
     uint256 public numProposals;
 
     IFakeNFTMarketplace nftMarketplace;
-    ICryptoDevsNFT cryptoDevsNFT;
+    ICapyNFT capyNFT;
 
-    constructor(address _nftMarketplace, address _cryptoDevsNFT, address initialOwner) payable Ownable(initialOwner) {
+    constructor(address _nftMarketplace, address _capyNFT, address initialOwner) payable Ownable(initialOwner) {
         nftMarketplace = IFakeNFTMarketplace(_nftMarketplace);
-        cryptoDevsNFT = ICryptoDevsNFT(_cryptoDevsNFT);
+        capyNFT = ICapyNFT(_capyNFT);
     }
 
     modifier nftHolderOnly() {
-        require(cryptoDevsNFT.balanceOf(msg.sender) > 0, "Not_A_DAO_MEMBER");
+        require(capyNFT.balanceOf(msg.sender) > 0, "Not_A_DAO_MEMBER");
         _;
     }
 
@@ -90,11 +90,11 @@ contract CryptoDevsDAO is Ownable {
     {
         Proposal storage proposal = proposals[proposalIndex];
 
-        uint256 voterNFTBalance = cryptoDevsNFT.balanceOf(msg.sender);
+        uint256 voterNFTBalance = capyNFT.balanceOf(msg.sender);
         uint256 numVotes = 0;
 
         for (uint256 i = 0; i < voterNFTBalance; i++) {
-            uint256 tokenId = cryptoDevsNFT.tokenOfOwnerByIndex(msg.sender, i);
+            uint256 tokenId = capyNFT.tokenOfOwnerByIndex(msg.sender, i);
             if (proposal.voters[tokenId] = false) {
                 numVotes++;
                 proposal.voters[tokenId] = true;
