@@ -57,13 +57,13 @@ Take note of the deployed contract addresses, as you'll need them for the fronte
 Edit the file named constants.ts in the root directory and add the necessary contract addresses and ABIs:
 
 ```bash
-export const CryptoDevsNFTAddress = "REPLACE_WITH_YOUR_CONTRACT_ADDRESS";
+export const CapyNFTAddress = "REPLACE_WITH_YOUR_CONTRACT_ADDRESS";
 export const FakeNFTMarketplaceAddress = "REPLACE_WITH_YOUR_CONTRACT_ADDRESS";
-export const CryptoDevsDAOAddress = "REPLACE_WITH_YOUR_CONTRACT_ADDRESS";
+export const CapyDAOAddress = "REPLACE_WITH_YOUR_CONTRACT_ADDRESS";
 
-export const CryptoDevsNFTABI = []; // REPLACE THIS WITH THE NFT CONTRACT ABI
+export const CapyNFTABI = []; // REPLACE THIS WITH THE NFT CONTRACT ABI
 export const FakeNFTMarketplaceABI = []; // REPLACE THIS WITH THE FAKE MARKETPLACE ABI
-export const CryptoDevsDAOABI = []; // REPLACE THIS WITH THE DAO ABI
+export const CapyDAOABI = []; // REPLACE THIS WITH THE DAO ABI
 ```
 Replace the placeholders with the actual contract addresses and ABI content from the JSON files located in hardhat/artifacts/contracts/<Contract Name>.sol.
 
