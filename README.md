@@ -22,15 +22,15 @@ Capybara is a decentralized autonomous organization (DAO) designed to enable mem
 
 ## Setup
 
-### 1. Clone the repository to your local machine
+### Clone the repository to your local machine
 
    ```bash
     git clone https://github.com/yourusername/capybara-dao.git
     cd capybara-dao
    ```
-### 2. Set Up Environment Variables
+### Set Up Environment Variables
 
-  Create a .env file in foundry-app:
+  Create a .env file in contracts directory:
   
    ```bash
     PRIVATE_KEY="..."
@@ -41,73 +41,40 @@ Capybara is a decentralized autonomous organization (DAO) designed to enable mem
   QUICKNODE_RPC_URL: QuickNode HTTP Provider link.  
   ETHERSCAN_API_KEY: Etherscan API key.
 
-### 3. Deploy the Whitelist Contract
+### Deploy the contracts
 
-  Load environment variables:
-
+  Deploy the smart contracts to your preferred network
+  ps:- I have used sepolia test network
   ```bash
-    source .env
+    npx hardhat run scripts/deploy.js --network your-network
    ```
-  Deploy the contract:
-  ```bash
-    forge create --rpc-url $QUICKNODE_RPC_URL --private-key $PRIVATE_KEY --constructor-args 10 --etherscan-api-key $ETHERSCAN_API_KEY --verify src/Whitelist.sol:Whitelist
-```
+Take note of the deployed contract addresses, as you'll need them for the frontend configuration.
 
-### 4. Add Users to the Whitelist
+## Frontend setup
 
-Interact with the deployed contract on Etherscan:
+### Define Constants
 
-- Go to Sepolia Etherscan.
-- Search for your contract address.
-- Under the "Contract" tab, go to "Write Contract".
-- Connect your wallet.
-- Call `addAddressToWhitelist`.
-
-### 5. Deploy the NFT Contract
-
-Deploy the CryptoDevs contract:
+Edit the file named constants.ts in the root directory and add the necessary contract addresses and ABIs:
 
 ```bash
-forge create --rpc-url $QUICKNODE_RPC_URL --private-key $PRIVATE_KEY --constructor-args <Whitelist Contract Address> --etherscan-api-key $ETHERSCAN_API_KEY --verify src/CryptoDevs.sol:CryptoDevs
+export const CryptoDevsNFTAddress = "REPLACE_WITH_YOUR_CONTRACT_ADDRESS";
+export const FakeNFTMarketplaceAddress = "REPLACE_WITH_YOUR_CONTRACT_ADDRESS";
+export const CryptoDevsDAOAddress = "REPLACE_WITH_YOUR_CONTRACT_ADDRESS";
+
+export const CryptoDevsNFTABI = []; // REPLACE THIS WITH THE NFT CONTRACT ABI
+export const FakeNFTMarketplaceABI = []; // REPLACE THIS WITH THE FAKE MARKETPLACE ABI
+export const CryptoDevsDAOABI = []; // REPLACE THIS WITH THE DAO ABI
 ```
-Replace <Whitelist Contract Address> with your actual Whitelist contract address.
+Replace the placeholders with the actual contract addresses and ABI content from the JSON files located in hardhat/artifacts/contracts/<Contract Name>.sol.
 
-### 6. Test Whitelisted Mint
-
-- Open the NFT contract on Sepolia Etherscan.
-- Go to the "Write Contract" tab.
-- Connect your wallet.
-- Call mint with payableAmount as 0.
-
-### 7. Test Non-Whitelisted Mint
-
-- Switch to a non-whitelisted account.
-- Connect your wallet on Etherscan.
-- Call mint with payableAmount as 0.01.
-
-## License
-This project is licensed under the MIT License.
-
-## Contributing
-
-Contributions are welcome! If you have ideas for improvements, new features, or bug fixes, please open an issue or submit a pull request.
-
-
-This is a [RainbowKit](https://rainbowkit.com) + [wagmi](https://wagmi.sh) + [Next.js](https://nextjs.org/) project bootstrapped with [`create-rainbowkit`](/packages/create-rainbowkit).
-
-## Getting Started
-
-First, run the development server:
+### Install the Dependencies and run the Development Server
 
 ```bash
+npm install
 npm run dev
 ```
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-## Learn More
 
 To learn more about this stack, take a look at the following resources:
 
@@ -117,9 +84,9 @@ To learn more about this stack, take a look at the following resources:
 
 You can check out [the RainbowKit GitHub repository](https://github.com/rainbow-me/rainbowkit) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## License
+This project is licensed under the MIT License.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# Capybara
+Contributions are welcome! If you have ideas for improvements, new features, or bug fixes, please open an issue or submit a pull request.
