@@ -1,8 +1,8 @@
 import {
-  CryptoDevsDAOABI,
-  CryptoDevsDAOAddress,
-  CryptoDevsNFTABI,
-  CryptoDevsNFTAddress,
+  CapyDAOABI,
+  CapyDAOAddress,
+  CapyNFTABI,
+  CapyNFTAddress,
 } from "../constants";
 import { BigNumberish } from "@ethersproject/bignumber";
 import { config } from "../config";
@@ -31,24 +31,24 @@ const Home: NextPage = () => {
   const [ selectedTab, setSelectedTab ] = useState("");
 
   const daoOwner = useReadContract({
-    abi: CryptoDevsDAOABI,
-    address: CryptoDevsDAOAddress,
+    abi: CapyDAOABI,
+    address: CapyDAOAddress,
     functionName: "owner",
   });
 
   const daoBalance = useBalance({
-    address: CryptoDevsDAOAddress,
+    address: CapyDAOAddress,
   });
 
   const numOfProposalsInDAO = useReadContract({
-    abi: CryptoDevsDAOABI,
-    address: CryptoDevsDAOAddress,
+    abi: CapyDAOABI,
+    address: CapyDAOAddress,
     functionName: "numProposals",
   });
 
   const nftBalanceOfUser = useReadContract({
-    abi: CryptoDevsNFTABI,
-    address: CryptoDevsNFTAddress,
+    abi: CapyNFTABI,
+    address: CapyNFTAddress,
     functionName: "balanceOf",
     args: [address],
   });
@@ -58,8 +58,8 @@ const Home: NextPage = () => {
     setLoading(true);
     try {
       const tx = await writeContract(config, {
-        address: CryptoDevsDAOAddress,
-        abi: CryptoDevsDAOABI,
+        address: CapyDAOAddress,
+        abi: CapyDAOABI,
         functionName: "createProposal",
         args: [fakeNFTokenId],
       });
@@ -86,8 +86,8 @@ const Home: NextPage = () => {
   const fetchProposalById = useCallback(async (id: number): Promise<Proposal> => {
     try {
       const proposal = await readContract(config, {
-        address: CryptoDevsDAOAddress,
-        abi: CryptoDevsDAOABI,
+        address: CapyDAOAddress,
+        abi: CapyDAOABI,
         functionName: "proposals",
         args: [id],
       });
@@ -164,8 +164,8 @@ const Home: NextPage = () => {
 
     try {
       const tx = await writeContract(config, {
-        address: CryptoDevsDAOAddress,
-        abi: CryptoDevsDAOABI,
+        address: CapyDAOAddress,
+        abi: CapyDAOABI,
         functionName: "voteOnProposal",
         args: [proposalId, vote === "YAY" ? 0 : 1]
       });
@@ -185,8 +185,8 @@ const Home: NextPage = () => {
 
     try {
       const tx = await writeContract(config, {
-        address: CryptoDevsDAOAddress,
-        abi: CryptoDevsDAOABI,
+        address: CapyDAOAddress,
+        abi: CapyDAOABI,
         functionName: "executeProposal",
         args: [proposalId],
       });
@@ -207,8 +207,8 @@ const Home: NextPage = () => {
 
     try {
       const tx = await writeContract(config,{
-        address: CryptoDevsDAOAddress,
-        abi: CryptoDevsDAOABI,
+        address: CapyDAOAddress,
+        abi: CapyDAOABI,
         functionName: "withdrawEther",
       });
 
@@ -243,7 +243,7 @@ const Home: NextPage = () => {
     } else if (nftBalanceOfUser.data === 0) {
       return (
         <div className={styles.description}>
-          You do not own any CryptoDevs NFTs. <br />
+          You do not own any Capy NFTs. <br />
           <b>You cannot create or vote on proposals</b>
         </div>
       );
@@ -363,17 +363,16 @@ const Home: NextPage = () => {
   return (
     <div className={inter.className}>
       <Head>
-        <title>CryptoDevs DAO</title>
-        <meta name="description" content="CryptoDevs DAO" />
+        <title>Capy DAO</title>
+        <meta name="description" content="Capy DAO" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className={styles.main}>
         <div>
-          <h1 className={styles.title}>Welcome to Crypto Devs!</h1>
-          <div className={styles.description}>Welcome to the DAO!</div>
+          <h1 className={styles.title}>Welcome to Capybara</h1>
           <div className={styles.description}>
-            Your CryptoDevs NFT Balance: {nftBalanceOfUser.data ? (nftBalanceOfUser.data as number).toString() : "Loading..."}
+            Your Capy NFT Balance: {nftBalanceOfUser.data ? (nftBalanceOfUser.data as number).toString() : "Loading..."}
             <br />
             {daoBalance.data && (
               <>
